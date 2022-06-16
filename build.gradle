@@ -1,9 +1,12 @@
 plugins {
+    id 'org.springframework.boot' version '2.6.8'
+    id 'io.spring.dependency-management' version '1.0.11.RELEASE'
     id 'java'
 }
 
 group 'ward'
 version '1.0-SNAPSHOT'
+sourceCompatibility = '11'
 
 repositories {
     mavenCentral()
@@ -12,6 +15,9 @@ repositories {
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+    compileOnly 'org.projectlombok:lombok' // compile 시에만 빌드하고 빌드 결과물에는 포함하지 않는다.
+    annotationProcessor 'org.projectlombok:lombok' //컴파일 타임에 어노테이션을 스캔하고 처리하기 위한것
 }
 
 test {
