@@ -14,7 +14,7 @@ public class HelloResponseDtoTest {
         String name = "test";
         int amount = 1000;
 
-        //when -> 구체화하고자 하는 그 행동
+        //when -> 구체화하고자 하는 그 행동 or 대상
        HelloResponseDto dto = new HelloResponseDto(name, amount);
 
         //then -> 어떤 특정한 행동 때문에 발생할거라고 예상되는 변화에 대한 설명

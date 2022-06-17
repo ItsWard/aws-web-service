@@ -1,15 +1,16 @@
 package com.ward.springboot.domain.posts;
 
+import com.ward.springboot.domain.BaseTimeEntity;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import javax.persistence.*;
 
-
+//Page 88 ~ 89
 @Getter
 @NoArgsConstructor
 @Entity //DB 테이블과 링크될 클래스,
-public class Posts {
+public class Posts extends BaseTimeEntity {
 
     @Id // PK 필드 Primary Key
     @GeneratedValue(strategy = GenerationType.IDENTITY) //PK 생성규칙 IDENTITY는 auto increment됨
@@ -29,4 +30,13 @@ public class Posts {
         this.content = content;
         this.author = author;
     }
+
+    public void update(String title, String content){
+        this.title = title;
+        this.content = content;
+    }
+
+    //Page 88 ~ 89 END
+
+
 }

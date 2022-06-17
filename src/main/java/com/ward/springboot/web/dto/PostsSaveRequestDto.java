@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+//Page 107 ~ 108
 @Getter
 @NoArgsConstructor
 public class PostsSaveRequestDto {
@@ -27,4 +28,6 @@ public class PostsSaveRequestDto {
                 .author(author)
                 .build();
     }
+
+    //Page 107 ~ 108 END
 }
