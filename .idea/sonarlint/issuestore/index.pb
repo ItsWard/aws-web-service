@@ -26,3 +26,9 @@ w
 G.idea/sonarlint/issuestore/5/b/5bbfa66edb4db3c7c33c5181f43510990d3307f9,f\7\f7819ea138c33fec28e7e536cb2de34db38fc121
 f
 601 인텔리제이로 스프링 부트 시작하기.md,1\5\15ea70d57172db7a19a83a82bb2abed9f89b4fb0
+m
+=02 스프링 부트에서 테스트 코드를 작성하자.md,5\e\5ebaa83586b807bef3965a13f096882c2896ac30
+v
+Fsrc/test/java/com/ward/springboot/domain/posts/PostRepositoryTest.java,6\f\6fdc8d2a492418f9e6e5ce34b73ead6ca5931f40
+s
+Csrc/test/java/com/ward/springboot/web/dto/HelloResponseDtoTest.java,5\2\52f878e5e2c4ab724c82eed21822cf496fe64ebc

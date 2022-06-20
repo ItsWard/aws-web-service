@@ -2,6 +2,7 @@ package com.ward.springboot.service;
 
 import com.ward.springboot.domain.posts.Posts;
 import com.ward.springboot.domain.posts.PostsRepository;
+import com.ward.springboot.log.LogExecutionTime;
 import com.ward.springboot.web.dto.PostUpdateRequestDto;
 import com.ward.springboot.web.dto.PostsResponseDto;
 import com.ward.springboot.web.dto.PostsSaveRequestDto;
@@ -22,6 +23,7 @@ public class PostsService {
     //Page 105 END
 
     //Page 113
+
     @Transactional
     public Long update(Long id, PostUpdateRequestDto requestDto) {
         Posts posts = postsRepository.findById(id)

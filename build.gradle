@@ -20,12 +20,16 @@ dependencies {
 
     compileOnly 'org.projectlombok:lombok' // compile 시에만 빌드하고 빌드 결과물에는 포함하지 않는다.
     annotationProcessor 'org.projectlombok:lombok' //컴파일 타임에 어노테이션을 스캔하고 처리하기 위한것
-
     //Page 86
     implementation 'com.h2database:h2' //
     testImplementation 'com.h2database:h2'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa' //스프링부트 JPA 라이브러리 관리
     testImplementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+
+    //Page 131
+    implementation 'org.springframework.boot:spring-boot-starter-mustache'
+    testImplementation 'org.springframework.boot:spring-boot-starter-mustache'
+
 }
 
 test {

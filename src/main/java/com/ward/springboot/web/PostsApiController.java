@@ -1,5 +1,6 @@
 package com.ward.springboot.web;
 
+import com.ward.springboot.log.LogExecutionTime;
 import com.ward.springboot.service.PostsService;
 import com.ward.springboot.web.dto.PostUpdateRequestDto;
 import com.ward.springboot.web.dto.PostsResponseDto;
