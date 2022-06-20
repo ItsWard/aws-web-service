@@ -2,6 +2,7 @@ package com.ward.springboot.web;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 
 //Page 132
 
@@ -12,6 +13,13 @@ public class IndexController {
 
         return "index";
     }
+
+    @GetMapping("/posts/save")
+    public String postSave() {
+
+        return "posts-save";
+    }
+
 
 
 }
