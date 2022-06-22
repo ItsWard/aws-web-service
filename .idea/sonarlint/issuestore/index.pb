@@ -41,10 +41,6 @@ d
 4src/main/java/com/ward/springboot/log/LogAspect.java,5\9\599dfb09d6cdc32ed869150d1665e0525f3c5f49
 k
 ;src/main/java/com/ward/springboot/log/LogExecutionTime.java,b\3\b31f554ed58aceaceb1dac1b7dea663a072a0eb7
-v
-Fsrc/test/java/com/ward/springboot/domain/posts/PostRepositoryTest.java,6\f\6fdc8d2a492418f9e6e5ce34b73ead6ca5931f40
-n
->src/test/java/com/ward/springboot/web/IndexControllerTest.java,d\f\df20ffb7042cf6329aaac96cddb7d636e559c318
 l
 <src/main/java/com/ward/springboot/domain/BaseTimeEntity.java,a\4\a4176d96c5cff80827dd61e646309a7470040052
 o
@@ -67,8 +63,6 @@ j
 :src/main/java/com/ward/springboot/web/HelloController.java,9\2\923c9afc6a6f38078fe4dd3aac0b11f2517caf23
 o
 ?src/main/java/com/ward/springboot/web/dto/HelloResponseDto.java,7\f\7fe38d9ab543abd82967208741f18e905446eee0
-q
-Asrc/test/java/com/ward/springboot/web/PostsApiControllerTest.java,6\5\65614b3e6c412c47bfa140b5b237214fb6da412e
 s
 Csrc/main/java/com/ward/springboot/web/dto/PostUpdateRequestDto.java,c\3\c32b66d331f2d34afc5a897a2df491ca581651dd
 s
