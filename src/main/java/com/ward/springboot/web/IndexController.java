@@ -1,5 +1,7 @@
 package com.ward.springboot.web;
 
+import com.ward.springboot.config.auth.LoginUser;
+import com.ward.springboot.config.auth.dto.SessionUser;
 import com.ward.springboot.service.PostsService;
 import com.ward.springboot.web.dto.PostsResponseDto;
 import lombok.RequiredArgsConstructor;
@@ -10,6 +12,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpSession;
+
 //Page 132
 
 @RequiredArgsConstructor
@@ -17,13 +21,20 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class IndexController {
 
     private final PostsService postsService;
+    private final HttpSession httpSession;
+
+
     @GetMapping("/")
-    public String index(Model model) {
+    public String index(Model model, @LoginUser SessionUser user) {
         //Page 150
         //index.mustache tbody id = tbody ~ {{#posts}} 부분에
         //postService.findAllDesc -> PostsRepository Query 전체조회 데이터
         //Model and View를 이용해 데이터를 넘겨 View에서 조회 가능하게함
         model.addAttribute("posts", postsService.findAllDesc());
+        //Page 190
+        if (user != null) {
+            model.addAttribute("userName", user.getName());
+        }
         return "index";
     }
 
@@ -45,6 +56,7 @@ public class IndexController {
 
         return "posts-update";
     }
+
 
 
 

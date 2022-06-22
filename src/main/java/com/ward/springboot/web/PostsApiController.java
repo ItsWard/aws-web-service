@@ -1,12 +1,10 @@
 package com.ward.springboot.web;
 
-import com.ward.springboot.log.LogExecutionTime;
 import com.ward.springboot.service.PostsService;
 import com.ward.springboot.web.dto.PostUpdateRequestDto;
 import com.ward.springboot.web.dto.PostsResponseDto;
 import com.ward.springboot.web.dto.PostsSaveRequestDto;
 import lombok.RequiredArgsConstructor;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 //Page 105
