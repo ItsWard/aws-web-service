@@ -6,6 +6,7 @@ import com.ward.springboot.web.dto.PostUpdateRequestDto;
 import com.ward.springboot.web.dto.PostsResponseDto;
 import com.ward.springboot.web.dto.PostsSaveRequestDto;
 import lombok.RequiredArgsConstructor;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 //Page 105
@@ -33,5 +34,12 @@ public class PostsApiController {
         return postsService.findById(id);
     }
     //Page 111 END
+
+    //Page 160
+    @DeleteMapping("/api/v1/posts/{id}")
+    public Long delete(@PathVariable Long id){
+        postsService.delete(id);
+        return id;
+    }
 
 }

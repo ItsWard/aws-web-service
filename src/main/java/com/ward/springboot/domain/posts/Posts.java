@@ -31,6 +31,10 @@ public class Posts extends BaseTimeEntity {
         this.author = author;
     }
 
+
+    //PostsService에서 Transaction이 끝나는 시점에, 쿼리를 따로 날리지않아도
+    //JPA의 영속성 컨텍스트(엔티티를 영구 저장하는 환경)에 의해
+    //해당 테이블에 변경분을 반영함 -> 더티 체킹
     public void update(String title, String content){
         this.title = title;
         this.content = content;

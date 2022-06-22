@@ -50,7 +50,7 @@ public class PostsApiControllerTest {
                 .title(title)
                 .content(content)
                 .author("author")
-                .build();
+                .build(); //스트림 방식으로 구현된 빌더 패턴
 
         String url = "http://localhost:" + port + "/api/v1/posts";
 
@@ -84,7 +84,7 @@ public class PostsApiControllerTest {
         PostUpdateRequestDto requestDto = PostUpdateRequestDto.builder()
                 .title(exceptedTitle)
                 .content(expectedContent)
-                .build();
+                .build(); //스트림 방식
 
         String url = "http://localhost:" + port + "/api/v1/posts/" + updateId;
 

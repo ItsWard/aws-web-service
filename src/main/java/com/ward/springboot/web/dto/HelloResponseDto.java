@@ -1,6 +1,7 @@
 package com.ward.springboot.web.dto;
 
 
+import com.ward.springboot.domain.posts.Posts;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
@@ -11,5 +12,6 @@ public class HelloResponseDto {
 
     private final String name;
     private final int amount;
+
 //Page 61 END
 }

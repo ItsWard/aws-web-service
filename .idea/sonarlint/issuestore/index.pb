@@ -28,7 +28,19 @@ f
 601 인텔리제이로 스프링 부트 시작하기.md,1\5\15ea70d57172db7a19a83a82bb2abed9f89b4fb0
 m
 =02 스프링 부트에서 테스트 코드를 작성하자.md,5\e\5ebaa83586b807bef3965a13f096882c2896ac30
-v
-Fsrc/test/java/com/ward/springboot/domain/posts/PostRepositoryTest.java,6\f\6fdc8d2a492418f9e6e5ce34b73ead6ca5931f40
 s
 Csrc/test/java/com/ward/springboot/web/dto/HelloResponseDtoTest.java,5\2\52f878e5e2c4ab724c82eed21822cf496fe64ebc
+w
+G.idea/sonarlint/issuestore/5/2/52114fdaa426e9b83a3c5df4e11c4f0ebbcd814b,6\c\6c2193e090c53ebe039a28ee0f93415902762a26
+w
+G.idea/sonarlint/issuestore/1/5/15ea70d57172db7a19a83a82bb2abed9f89b4fb0,5\b\5b943f70521a28a3e41870f22d2acc42f6e03122
+w
+G.idea/sonarlint/issuestore/2/a/2a45a911a8f1836b0b6c5b758962572012d8f8c3,9\a\9aed88f31eac276604c6355c1adcc0bce1f80fd6
+w
+G.idea/sonarlint/issuestore/5/e/5ebaa83586b807bef3965a13f096882c2896ac30,f\2\f27288461e2181625330c04312feb6c43527faca
+w
+G.idea/sonarlint/issuestore/f/7/f7819ea138c33fec28e7e536cb2de34db38fc121,6\7\67fa304b8cddf1fed80b91f5b705d64cb3dab32a
+d
+4src/main/java/com/ward/springboot/log/LogAspect.java,5\9\599dfb09d6cdc32ed869150d1665e0525f3c5f49
+k
+;src/main/java/com/ward/springboot/log/LogExecutionTime.java,b\3\b31f554ed58aceaceb1dac1b7dea663a072a0eb7
