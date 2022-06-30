@@ -11,8 +11,6 @@ w
 G.idea/sonarlint/issuestore/d/d/dd7b3350c29c49497756c7f32c69a3bed18b1cba,9\d\9db44714da783e82392884aeea0d83f0125570ed
 w
 G.idea/sonarlint/issuestore/6/e/6ecd6000a7b6f4a2884412ff19f74193ed089648,3\8\38464f72ef55196e32fe4dfbcc50f1cda5f4cb5d
-7
-gradlew,5\b\5bbfa66edb4db3c7c33c5181f43510990d3307f9
 X
 (gradle/wrapper/gradle-wrapper.properties,f\b\fbe448ebfc3eb2d4e308f6b8b043666f5b57235e
 ;
@@ -61,8 +59,6 @@ q
 Asrc/test/java/com/ward/springboot/web/PostsApiControllerTest.java,6\5\65614b3e6c412c47bfa140b5b237214fb6da412e
 n
 >src/test/java/com/ward/springboot/web/IndexControllerTest.java,d\f\df20ffb7042cf6329aaac96cddb7d636e559c318
-n
->src/test/java/com/ward/springboot/web/HelloControllerTest.java,d\c\dc652416fe4d856bf654027805e19faa03598d57
 v
 Fsrc/test/java/com/ward/springboot/domain/posts/PostRepositoryTest.java,6\f\6fdc8d2a492418f9e6e5ce34b73ead6ca5931f40
 s
