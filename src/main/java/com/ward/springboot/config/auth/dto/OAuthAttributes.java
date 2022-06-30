@@ -9,11 +9,11 @@ import java.util.Map;
 
 @Getter
 public class OAuthAttributes {
-    private Map<String, Object> attributes;
-    private String nameAttributeKey;
-    private String name;
-    private String email;
-    private String picture;
+    private Map<String, Object> attributes; //속성값
+    private String nameAttributeKey; //이름 속성 키
+    private String name; //이름
+    private String email; //이메일
+    private String picture; //유저 프로필 사진
 
     @Builder
     public OAuthAttributes(Map<String, Object> attributes, String nameAttributeKey, String name, String email, String picture) {

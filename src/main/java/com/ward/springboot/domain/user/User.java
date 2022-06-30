@@ -32,6 +32,7 @@ public class User {
         this.role = role;
     }
 
+    //영속성 -> 영원하게 유지되는 속성
     public User update(String name, String picture) {
         this.name = name;
         this.picture = picture;
