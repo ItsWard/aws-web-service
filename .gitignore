@@ -43,3 +43,4 @@ bin/
 
 ### oauth ###
 application-oauth.properties
+application.properties
