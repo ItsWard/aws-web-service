@@ -47,9 +47,6 @@ w
 G.idea/sonarlint/issuestore/9/a/9aed88f31eac276604c6355c1adcc0bce1f80fd6,0\1\0188cc1adb7d21a369f63788309ba8ab137ed687
 w
 G.idea/sonarlint/issuestore/5/b/5b943f70521a28a3e41870f22d2acc42f6e03122,4\1\41963b2dd960049e48da3c89a14bccdedd18aca2
-:
-
-.gitignore,a\5\a5cc2925ca8258af241be7e5b0381edf30266302
 w
 G.idea/sonarlint/issuestore/b/a/bae589266abfdde752f1528d649b33b0155cf6da,c\0\c0e8ca4fc261f07537d5a32424635089bfe4ed8b
 w
@@ -60,8 +57,6 @@ w
 G.idea/sonarlint/issuestore/4/1/41963b2dd960049e48da3c89a14bccdedd18aca2,5\d\5da1d7d500d2aa71ee99c572c35afbf730605a13
 w
 G.idea/sonarlint/issuestore/c/1/c16ab63f5f1c5b2116f740f61e16fee98dcd882f,f\f\ff73af4c30aaf0e80bdb6f40e06b9a1d7d697c3d
-w
-G.idea/sonarlint/issuestore/a/5/a5cc2925ca8258af241be7e5b0381edf30266302,e\d\ed67eb178d523a4b3f117dcbe0eda5196367ceec
 q
 Asrc/test/java/com/ward/springboot/web/PostsApiControllerTest.java,6\5\65614b3e6c412c47bfa140b5b237214fb6da412e
 n
