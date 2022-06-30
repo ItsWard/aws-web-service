@@ -36,6 +36,8 @@ dependencies {
     testImplementation 'org.springframework.session:spring-session-jdbc'
 
     testImplementation 'org.springframework.security:spring-security-test'
+
+    compileOnly 'org.mariadb.jdbc:mariadb-java-client'
 }
 
 test {
