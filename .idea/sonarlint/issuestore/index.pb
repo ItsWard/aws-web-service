@@ -1,6 +1,4 @@
 
-?
-settings.gradle,0\5\05efc8b1657769a27696d478ded1e95f38737233
 T
 $.idea/codeStyles/codeStyleConfig.xml,d\d\dd7b3350c29c49497756c7f32c69a3bed18b1cba
 L
