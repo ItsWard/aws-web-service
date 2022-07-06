@@ -60,9 +60,9 @@ jobs:
         cd ../ && mkdir -p deploy
         mv before-deploy/before-deploy.zip deploy/$PROJECT_NAME.zip
 
-    - name: Make zip file
-      run: zip -r ./$PROJECT_NAME.zip .         # (12)
-      shell: bash
+#     - name: Make zip file
+#       run: zip -r ./$PROJECT_NAME.zip .         # (12)
+#       shell: bash
 
     - name: Configure AWS credentials
       uses: aws-actions/configure-aws-credentials@v1      #(13)
