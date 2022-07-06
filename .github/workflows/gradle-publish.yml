@@ -1,45 +1,78 @@
-# This workflow uses actions that are not certified by GitHub.
-# They are provided by a third-party and are governed by
-# separate terms of service, privacy policy, and support
-# documentation.
-# This workflow will build a package using Gradle and then publish it to GitHub packages when a release is created
-# For more information see: https://github.com/actions/setup-java/blob/main/docs/advanced-usage.md#Publishing-using-gradle
+env: 
+  S3_BUCKET_NAME: ward-build
+  PROJECT_NAME: aws-web-service
+  CODE_DEPLOY_APP_NAME: webservice
+  CODE_DEPLOY_GROUP_NAME: webservice-group
 
-name: Gradle Package
+name: deploy # (0) GitHub Action에서 보여질 이름을 지정합니다. 
 
 on:
   release:
-    types: [created]
+    types: [push] # (1) push시 자동으로 실행됩니다.
+  push:
+    branches: [main] # (2) main 브랜치에서 동작합니다.
+  workflow_dispatch: # (3) 수동으로도 실행이 가능합니다.
+
 
 jobs:
-  build:
-
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
+  build: 
+    runs-on: ubuntu-latest # (4) 해당 스크립트를 작동할 OS 입니다.
+    permissions: 
+      contents: read 
       packages: write
 
     steps:
-    - uses: actions/checkout@v3
-    - name: Set up JDK 11
-      uses: actions/setup-java@v3
+    - name: Checkout 
+      uses: actions/checkout@v3  # (5) 프로젝트 코드를 CheckOut합니다.    
+      
+    - name: Set up JDK 11 
+      uses: actions/setup-java@v3 # (6) 
       with:
-        java-version: '11'
-        distribution: 'temurin'
-        server-id: github # Value of the distributionManagement/repository/id field of the pom.xml
-        settings-path: ${{ github.workspace }} # location for the settings.xml file
+        java-version: '11' 
+        distribution: 'temurin' 
+        
+    - name: Grant execute permission for gradlew
+      run: chmod +x ./gradlew # (7)
+      shell: bash
 
     - name: Build with Gradle
-      uses: gradle/gradle-build-action@67421db6bd0bf253fb4bd25b31ebb98943c375e1
+      run: ./gradlew clean build # (8)
+      shell: bash
+      
+    - name: Get current time
+      uses: 1466587594/get-current-time@v2 
+      id: current-time
       with:
-        arguments: build
+        format: YYYY-MM-DDTHH-mm-ss # (9)
+        utcOffset: "+09:00"
 
-    # The USERNAME and TOKEN need to correspond to the credentials environment variables used in
-    # the publishing section of your build.gradle
-    - name: Publish to GitHub Packages
-      uses: gradle/gradle-build-action@67421db6bd0bf253fb4bd25b31ebb98943c375e1
+    - name: Show Current Time
+      run: echo "CurrentTime=${{steps.current-time.outputs.formattedTime}}" # (10)
+      shell: bash
+
+    - name: Generate deployment package # (1)
+      run: |
+        mkdir -p before-deploy
+        cp scripts/*.sh before-deploy/
+        cp appspec.yml before-deploy/
+        cp build/libs/*.jar before-deploy/
+        cd before-deploy && zip -r before-deploy *
+        cd ../ && mkdir -p deploy
+        mv before-deploy/before-deploy.zip deploy/$PROJECT_NAME.zip
+
+    - name: Make zip file
+      run: zip -r ./$PROJECT_NAME.zip .         # (12)
+      shell: bash
+
+    - name: Configure AWS credentials
+      uses: aws-actions/configure-aws-credentials@v1      #(13)
       with:
-        arguments: publish
-      env:
-        USERNAME: ${{ github.actor }}
-        TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: ap-northeast-2
+
+    - name: Upload to S3
+      run: aws s3 cp --region ap-northeast-2 ./$PROJECT_NAME.zip s3://$S3_BUCKET_NAME/$PROJECT_NAME/$PROJECT_NAME.zip  #(14)
+
+    - name: Code Deploy
+      run: aws deploy create-deployment --application-name $CODE_DEPLOY_APP_NAME --deployment-config-name CodeDeployDefault.AllAtOnce --deployment-group-name $CODE_DEPLOY_GROUP_NAME --s3-location bucket=$S3_BUCKET_NAME,bundleType=zip,key=$PROJECT_NAME/$PROJECT_NAME.zip
