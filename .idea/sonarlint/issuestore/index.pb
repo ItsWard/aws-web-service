@@ -21,8 +21,6 @@ f
 601 인텔리제이로 스프링 부트 시작하기.md,1\5\15ea70d57172db7a19a83a82bb2abed9f89b4fb0
 m
 =02 스프링 부트에서 테스트 코드를 작성하자.md,5\e\5ebaa83586b807bef3965a13f096882c2896ac30
-s
-Csrc/test/java/com/ward/springboot/web/dto/HelloResponseDtoTest.java,5\2\52f878e5e2c4ab724c82eed21822cf496fe64ebc
 w
 G.idea/sonarlint/issuestore/5/2/52114fdaa426e9b83a3c5df4e11c4f0ebbcd814b,6\c\6c2193e090c53ebe039a28ee0f93415902762a26
 w
@@ -47,12 +45,6 @@ w
 G.idea/sonarlint/issuestore/4/1/41963b2dd960049e48da3c89a14bccdedd18aca2,5\d\5da1d7d500d2aa71ee99c572c35afbf730605a13
 w
 G.idea/sonarlint/issuestore/c/1/c16ab63f5f1c5b2116f740f61e16fee98dcd882f,f\f\ff73af4c30aaf0e80bdb6f40e06b9a1d7d697c3d
-q
-Asrc/test/java/com/ward/springboot/web/PostsApiControllerTest.java,6\5\65614b3e6c412c47bfa140b5b237214fb6da412e
-n
->src/test/java/com/ward/springboot/web/IndexControllerTest.java,d\f\df20ffb7042cf6329aaac96cddb7d636e559c318
-v
-Fsrc/test/java/com/ward/springboot/domain/posts/PostRepositoryTest.java,6\f\6fdc8d2a492418f9e6e5ce34b73ead6ca5931f40
 s
 Csrc/main/java/com/ward/springboot/web/dto/PostsListResponseDto.java,5\a\5afb9a7857cd45764aa35032a2f1d51bf9c6f515
 r
@@ -75,8 +67,6 @@ b
 2src/main/java/com/ward/springboot/Application.java,7\6\76b6430a88f690a100b9fb8f29ea44e16e0acc2d
 7
 gradlew,5\b\5bbfa66edb4db3c7c33c5181f43510990d3307f9
-n
->src/test/java/com/ward/springboot/web/HelloControllerTest.java,d\c\dc652416fe4d856bf654027805e19faa03598d57
 w
 G.idea/sonarlint/issuestore/0/4/04b04817faefed8e794a17a4bee36b96ccc695a5,7\c\7c97874c4bcbd6a282174375d76aab87186a4381
 w
