@@ -63,8 +63,6 @@ w
 G.idea/sonarlint/issuestore/c/0/c0e8ca4fc261f07537d5a32424635089bfe4ed8b,9\6\96d7fa67b85807f75c47e852611046c9006c7671
 w
 G.idea/sonarlint/issuestore/5/d/5da1d7d500d2aa71ee99c572c35afbf730605a13,0\4\04b04817faefed8e794a17a4bee36b96ccc695a5
-b
-2src/main/java/com/ward/springboot/Application.java,7\6\76b6430a88f690a100b9fb8f29ea44e16e0acc2d
 7
 gradlew,5\b\5bbfa66edb4db3c7c33c5181f43510990d3307f9
 w
