@@ -23,7 +23,7 @@ public class IndexControllerTest {
         //when -> 구체화하고자 하는 그 행동 or 대상
         String body = this.restTemplate.getForObject("/", String.class);
         //then -> 어떤 특정한 행동 때문에 발생할거라고 예상되는 변화에 대한 설명
-        assertThat(body).contains("스프링부트로 시작하는 웹 서비스 Ver.5");
+        assertThat(body).contains("스프링부트로 시작하는 웹 서비스 Ver.6");
     }
 
 }
