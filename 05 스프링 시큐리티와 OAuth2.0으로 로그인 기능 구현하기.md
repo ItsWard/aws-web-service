@@ -608,4 +608,153 @@ public class IndexController {
 spring.session.store-type-jdbc   
 ```
 
+이후 재시작하게 되면, 세션이 데이터베이스에 저장되어 로그인이 풀리지 않도록 된다.
+
+
+## 3.1 네이버로 로그인
+
+다음과 같이 ```application-oauth.properties```에 추가한다.
+스프링에서 공식적으로 네이버를 지원하지 않으므로 다음과 같이 추가하어야 한다.
+
+**application-oauth.properties**
+```properties
+spring.security.oauth2.client.registration.google.client-id=아이디
+spring.security.oauth2.client.registration.google.client-secret=비밀번호
+spring.security.oauth2.client.registration.google.scope=profile,email
+
+#registration
+spring.security.oauth2.client.registration.naver.client-id=아이디
+spring.security.oauth2.client.registration.naver.client-secret=비밀번호
+spring.security.oauth2.client.registration.naver.redirect-uri={baseUrl}/{action}/oauth2/code/{registrationId}
+spring.security.oauth2.client.registration.naver.authorization_grant_type=authorization_code
+spring.security.oauth2.client.registration.naver.scope=name,email,profile_image
+spring.security.oauth2.client.registration.naver.client-name=Naver
+
+# provider
+spring.security.oauth2.client.provider.naver.authorization_uri=https://nid.naver.com/oauth2.0/authorize
+spring.security.oauth2.client.provider.naver.token_uri=https://nid.naver.com/oauth2.0/token
+spring.security.oauth2.client.provider.naver.user-info-uri=https://openapi.naver.com/v1/nid/me
+spring.security.oauth2.client.provider.naver.user_name_attribute=response
+
+```
+[네이버 인증센터](developers.naver.com/apps/#/register?api=nvlogin) 로 이동하여 다음과 같이 추가한다. 
+
+![image](https://user-images.githubusercontent.com/104341003/178157108-f682257e-aaee-45aa-a9e1-90c7538670f1.png)
+
+
+대부분을 구글 코드에서 확장 할 수 있도록 설정하였으므로, ```OAuthAttributes.java```에 코드만 살짝 추가하도록 한다.
+
+```OAuthAttributes.java```
+
+```java
+@Getter
+public class OAuthAttributes {
+    private Map<String, Object> attributes;
+    private String nameAttributeKey;
+    private String name;
+    private String email;
+    private String picture;
+
+    @Builder
+    public OAuthAttributes(Map<String, Object> attributes, String nameAttributeKey, String name, String email, String picture){
+        this.attributes = attributes;
+        this.nameAttributeKey = nameAttributeKey;
+        this.name = name;
+        this.email = email;
+        this.picture = picture;
+    }
+
+    public static OAuthAttributes of(String registrationId, String userNameAttributeName, Map<String, Object> attributes){
+        System.out.println("registration="+registrationId);
+        if("naver".equals(registrationId)){
+            return ofNaver("id", attributes);
+        }
+        return ofGoogle(userNameAttributeName, attributes);
+    }
+    private static OAuthAttributes ofGoogle(String userNameAttributeName, Map<String, Object> attributes){
+        return OAuthAttributes.builder()
+                .name((String) attributes.get("name"))
+                .email((String) attributes.get("email"))
+                .picture((String) attributes.get("picture"))
+                .attributes(attributes)
+                .nameAttributeKey(userNameAttributeName)
+                .build();
+    }
+    private static OAuthAttributes ofNaver(String userNameAttributeName, Map<String, Object> attributes){
+        Map<String, Object> response = (Map<String, Object>) attributes.get("response");
+
+        return OAuthAttributes.builder()
+                .name((String) response.get("name"))
+                .email((String) response.get("email"))
+                .picture((String) response.get("profile_image"))
+                .attributes(response)
+                .nameAttributeKey(userNameAttributeName)
+                .build();
+    }
+
+    public User toEntity(){
+        return User.builder()
+                .name(name)
+                .email(email)
+                .picture(picture)
+                .role(Role.GUEST)
+                .build();
+    }
+}
+
+```
+
+또한 네이버에서도 사용할 수 있도록 index.mustache에도 추가한다.
+
+**index.mustache**   
+```mustache
+{{>layout/header}}
+    <h1>스프링 부트로 시작하는 웹 서비스 ver.2</h1>
+    <div class="col-md-12">
+        <!-- 로그인 기능 영역 -->
+        <div class="row">
+            <div class="col-md-6">
+                <a href="/posts/save" role="button" class="btn btn-primary">글 등록</a>
+                {{#userName}}
+                    Looged in as : <span id="user">{{userName}}</span>
+                    <a href="/logout" class="btn btn-info active" role="button">Logout</a>
+                {{/userName}}
+                {{^userName}}
+                    <a href="/oauth2/authorization/google" class="btn btn-success active" role="button">
+                        Google Login
+                    </a>
+                    <a href="/oauth2/authorization/naver" class="btn btn-secondary active" role="button">
+                        Naver Login
+                    </a>
+                {{/userName}}
+            </div>
+        </div>
+    </div>
+    <br>
+    <!-- 목록 출력 영역 -->
+    <table class="table table-horizontal table-bordered">
+        <thead class="thead-string">
+            <tr>
+                <th>게시글번호</th>
+                <th>제목</th>
+                <th>작성자</th>
+                <th>최종수정일</th>
+            </tr>
+        </thead>
+        <tbody id="tbody">
+            {{#posts}}
+                <tr>
+                    <td>{{id}}</td>
+                    <td><a href="/posts/update/{{id}}">{{title}}</a></td>
+                    <td>{{author}}</td>
+                    <td>{{modifiedDate}}</td>
+                </tr>
+            {{/posts}}
+        </tbody>
+    </table>
+{{>layout/footer}}
+```
+ 
+```mustache
+
 
