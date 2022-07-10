@@ -1,4 +1,4 @@
-# 스프링 시큐리티와 OAuth2.0으로 로그인 기능 구현하기.md
+# 05 스프링 시큐리티와 OAuth2.0으로 로그인 기능 구현하기.md
 
 해당 교재에서는 로그인 기능을 따로 구현하지 않고, 외부 소셜 로그인을 통해 진행을한다.
 
@@ -55,7 +55,7 @@ spring.profiles.include=oauth
 이런 개인정보같은 경우, public한 깃 허브에 올라갈 경우 해킹당할 위험이 크므로, application-oauth.properties를 .gitIgnore에 추가한다.
 
 
-## 1.2 User Entity 설정
+## 1.2 로그인 기능 구현 
 
 프로젝트/user/domain
 
@@ -82,6 +82,7 @@ public enum Role {
 
 
 user 클래스
+
 
 ```java
 @Getter
@@ -128,25 +129,31 @@ public class User extends BaseTimeEntity {
 
 ```
 
-``` @Enumerated(EnumType.STRING)```
+
+```@Enumerated(EnumType.STRING)```
 
 * JPA로 데이터베이스로 저장할 때 Enum 값을 어떤 형태로 저장할지를 결정
 * 기본적으로 int로 된 숫자가 저장 되므로 문자열 (EnumType.STRING)로 저장될 수 있도록 선언한다.
 
 이후 유저를 DB와 연결할 수 있는 Repository를 생성한다.
 
-
+```java
 public interface UserRepository extends JpaRepository<User, Long> {
     Optional<User> findByEmail(String email);
 }
+```
+
+  
 ```Optional```
 
 * Null값을 처리하기 위해, 안전한 Optional 사용
   
 ```findByEmail(String email)```
+    
 * 소셜 로그인으로 반환되는 값중 email을 통해 이미 생성된 사용자인지 처음 가입하는 사용자인지 판단하기 위한 메소드
 * PK 를 사용한 것이 아니라 Unique 를 사용한 것을 알 수 있다.   
   
+    
 ```java
       @Override
     protected void configure(HttpSecurity http) throws Exception{
@@ -258,9 +265,13 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
     }
 }
 ```
-
+    
+    
+위에서 서술한 OAuthAttributes 클래스를 아래와 같이 작성한다.
+    
 ```java
-  @Getter
+    
+@Getter
 public class OAuthAttributes {
     private Map<String, Object> attributes;
     private String nameAttributeKey;
@@ -276,11 +287,12 @@ public class OAuthAttributes {
         this.email = email;
         this.picture = picture;
     }
-
+    // OAuth2User에서 반환하는 사용자 정보는 Map 자료구조 형태이기에 값 하나하나를 변환 해야 함
     public static OAuthAttributes of(String registrationId, String userNameAttributeName, Map<String, Object> attributes){
         System.out.println("registration="+registrationId);
         return ofGoogle(userNameAttributeName, attributes);
     }
+       
     private static OAuthAttributes ofGoogle(String userNameAttributeName, Map<String, Object> attributes){
         return OAuthAttributes.builder()
                 .name((String) attributes.get("name"))
@@ -302,5 +314,254 @@ public class OAuthAttributes {
 }
 
 ```
+    
+SessionUser
+    
+```java
+package com.jojoldu.book.springboot.config.auth.dto;
+
+import com.jojoldu.book.springboot.domain.user.User;
+import lombok.Getter;
+
+import java.io.Serializable;
+
+@Getter
+public class SessionUser implements Serializable {
+
+    private String name;
+    private String email;
+    private String picture;
+
+    public SessionUser(User user){
+        this.name = user.getName();
+        this.email = user.getEmail();
+        this.picture = user.getPicture();
+    }
+}
+
+```    
+    
+## 1.3 로그인 화면 구현
+
+```index.mustache```에 로그인 버튼과 사용자 이름을 보여줄 수 있도록 화면을 구현한다.
+
+index.mustache    
+```mustache  
+{{>layout/header}}
+    <h1>스프링 부트로 시작하는 웹 서비스 ver.2</h1>
+    <div class="col-md-12">
+        <!-- 로그인 기능 영역 -->
+        <div class="row">
+            <div class="col-md-6">
+                <a href="/posts/save" role="button" class="btn btn-primary">글 등록</a>
+                {{#userName}}
+                    Looged in as : <span id="user">{{userName}}</span>
+                    <a href="/logout" class="btn btn-info active" role="button">Logout</a>
+                {{/userName}}
+                {{^userName}}
+                    <a href="/oauth2/authorization/google" class="btn btn-success active" role="button">
+                        Google Login
+                    </a>
+                {{/userName}}
+            </div>
+        </div>
+    </div>
+    <br>
+    <!-- 목록 출력 영역 -->
+    <table class="table table-horizontal table-bordered">
+        <thead class="thead-string">
+            <tr>
+                <th>게시글번호</th>
+                <th>제목</th>
+                <th>작성자</th>
+                <th>최종수정일</th>
+            </tr>
+        </thead>
+        <tbody id="tbody">
+            {{#posts}}
+                <tr>
+                    <td>{{id}}</td>
+                    <td><a href="/posts/update/{{id}}">{{title}}</a></td>
+                    <td>{{author}}</td>
+                    <td>{{modifiedDate}}</td>
+                </tr>
+            {{/posts}}
+        </tbody>
+    </table>
+{{>layout/footer}}
+
+```  
+
+
+```{{#userName}}```
+* 머스테치는 다른 언어와 같은 if문을 제공하지않기 때문에 최종값을 넘겨 갯수만큼 작동되도록 설정
+
+```a href = "/oauth2/authorization/google"```     
+
+* 스프링 시큐리티에서 기본적으로 제공하는 로그인 URL   
+* 로그아웃 URL과 마찬가지로 개발자가 별도의 컨트롤러를 생성할 필요가 없음
   
+userName을 ```index.mustache```에서도 사용할 수 있도록 model에 저장하는 내용을 컨트롤러에 추가한다.
+
+IndexController
+
+```java
+@RequiredArgsConstructor
+@Controller
+public class IndexController {
+
+    private final PostsService postsService;
+    private final HttpSession httpSession;
+    
+    @GetMapping("/")
+    public String index(Model model){
+        
+        model.addAttribute("posts", postsService.findAllDesc());
+        Session User user= (SessionUser) httpSession.getAttribute("user");
+        if(user != null){
+            model.addAttribute("userName", user.getName());
+        }
+        return "index";
+    }
+
+    @GetMapping("/posts/save")
+    public String postsSave(){
+        return "posts-save";
+    }
+
+    @GetMapping("/posts/update/{id}")
+    public String postsUpdate(@PathVariable Long id, Model model){
+
+        PostsResponseDto dto = postsService.findById(id);
+        model.addAttribute("post",dto);
+        return "posts-update";
+    }
+}
+
+```
+
+```(SessionUser) httpSession.getAttribute("user");```
+    
+* 앞서 작성된 CustomOAuth2UserService에서 로그인 성공 시 세션에 SessionUser를 지정하도록 구성         
+* 로그인 성공시 httpSession.getAttribute("user")에서 데이터를 가져올 수 있음
+
+이후 로그인을 테스트해본다.(구글)
+
+## 2.1 어노테이션 기반으로 개선
+
+같은 코드를 계속해서 복사 & 붙여넣기로 만든다면 이후에 수정이 필요할 때 모든 부분을 일일이 수정해줘야 하는 단점이 있다. 
+이렇게 될 경우 유지보수하기 어렵기 때문에, 아래와 같은 코드를 어노테이션을 새로 만들어 적용한다.
+
+```java
+Session user = (SessionUser) httpSession.getAttribute("user");
+```
+
+```config.auth``` 패키지에 ```@LoginUser``` 어노테이션을 생성한다.
+
+```java
+@Target(ElementType.PARAMETER)
+@Retention(RetentionPolicy.RUNTIME)
+public @interface LoginUser {
+}
+
+```
+
+@Retention(RetentionPolicy.RUNTIME)  
+
+* 어노테이션의 범위
+* 런타임 시점까지 어노테이션이 동작되도록 설정
+
+이후 동일한 위치에 ```HandlerMethodArgumentResolver``` 인터페이스를 구현한 클래스```LoginUserArgumentResolver``` 를 생성한다.
+```HandlerMethodArgumentResolver```는 구현체가 지정한 값으로 해당 메소드의 파라미터로 넘길 수 있다.
+
+```java
+@RequiredArgsConstructor
+@Component
+public class LoginUserArgumentResolver implements HandlerMethodArgumentResolver {
+
+    private final HttpSession httpSession;
+
+    @Override
+    public boolean supportsParameter(MethodParameter parameter) {
+        boolean isLoginUserAnnotation = parameter.getParameterAnnotation(LoginUser.class) != null;
+        boolean isUserClass = SessionUser.class.equals(parameter.getParameterType());
+        return isLoginUserAnnotation && isUserClass;
+    }
+
+    @Override
+    public Object resolveArgument(MethodParameter parameter, ModelAndViewContainer mavContainer, NativeWebRequest webRequest, WebDataBinderFactory binderFactory) throws Exception {
+        return httpSession.getAttribute("user");
+    }
+}
+
+```
+
+
+```java
+@Override
+public Object resolveArgument(MethodParameter parameter, ModelAndViewContainer mavContainer,
+   NativeWebRequest webRequest, WebDataBinderFactory binderFactroy) throws Exception {예외처리}
+```
+* 파라미터에 전달할 객체를 생성함.
+* 해당 소스에서는 파라미터에 @LoginUser 어노테이션이 붙어있고, 파라미터 클래스 타입이 SessionUser.class인 경우 true를 반환
+
+이렇게 생성된 ```LoginUserArgumentResolver```를 스프링에서 인식될 수 있도록 config 패키지에 ```WebConfig``` 클래스를 생성하여
+```WebMvcConfiguration```을 추가한다.
+
+```java
+
+@RequiredArgsConstructor
+@Configuration
+public class WebConfig implements WebMvcConfigurer {
+    private final LoginUserArgumentResolver loginUserArgumentResolver;
+
+    @Override
+    public void addArgumentResolvers(List<HandlerMethodArgumentResolver> argumentResolvers){
+        argumentResolvers.add(loginUserArgumentResolver);
+    }
+}
+```
+
+설정이 완료 되었으므로```IndexController``` 의 코드에서 반복되는 부분들을 모두 ```@LoginUser```로 개선한다.
+
+```java
+@RequiredArgsConstructor
+@Controller
+public class IndexController {
+
+    private final PostsService postsService;
+
+    @GetMapping("/")
+    public String index(Model model, @LoginUser SessionUser user){
+        model.addAttribute("posts", postsService.findAllDesc());
+
+        if(user != null){
+            model.addAttribute("userName", user.getName());
+        }
+        return "index";
+    }
+
+    @GetMapping("/posts/save")
+    public String postsSave(){
+        return "posts-save";
+    }
+
+    @GetMapping("/posts/update/{id}")
+    public String postsUpdate(@PathVariable Long id, Model model){
+
+        PostsResponseDto dto = postsService.findById(id);
+        model.addAttribute("post",dto);
+        return "posts-update";
+    }
+}
+```
+
+```@LoginUser SessionUser user```  
   
+* 기존에(User) httpSession.getAttribute("user")로 가져오던 세션 정보 값이 개선하여     
+* 이제는 어느 컨트롤러든지 @LoginUser만 사용함녀 세션 정보를 가져올 수 있다.
+
+
+## 2.2 세션 저장소로 데이터베이스 사용하기
+
+
