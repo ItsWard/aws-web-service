@@ -22,5 +22,5 @@ JPA를 통한 데이터베이스 작동?
 # 3. 개발 환경
 
 * JAVA 11
-* Spring Boot 2.6.8
+* Spring Boot 2.4.1
 * Gradle 7.4
