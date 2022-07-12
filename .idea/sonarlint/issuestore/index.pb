@@ -129,8 +129,6 @@ b
 2src/main/java/com/ward/springboot/Application.java,7\6\76b6430a88f690a100b9fb8f29ea44e16e0acc2d
 n
 >src/test/java/com/ward/springboot/web/IndexControllerTest.java,d\f\df20ffb7042cf6329aaac96cddb7d636e559c318
-A
-scripts/deploy.sh,7\c\7cb9bbdbbfab39da291abf148abedfdfbe6adebb
 j
 :src/main/java/com/ward/springboot/web/IndexController.java,b\b\bb1ba586e168ccd50ba11b5f3b6f9cd2cc14ad13
 g
