@@ -15,7 +15,7 @@ Commit : on Jun 16, 2022 Feat tdd-complete<br>
 
 > 공부 후 계속 추가될 내용 
 
-10장 무중단 
+10장 무중단 배포 완료
 
 # 3. 개발 환경
 
